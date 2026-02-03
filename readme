@@ -1,0 +1,33 @@
+Quick start:
+export HTTP_PROXY=http://127.0.0.1:7890
+export HTTPS_PROXY=http://127.0.0.1:7890
+
+kubectl apply -k k8s
+kubectl get all -n pure-k8s-prometheus
+
+kubectl logs -f deploy/pure-k8s-prometheus-app -n pure-k8s-prometheus
+kubectl logs -f deploy/prometheus -n pure-k8s-prometheus
+kubectl logs -f deploy/grafana -n pure-k8s-prometheus
+
+kubectl port-forward svc/pure-k8s-prometheus-app-service 5000:5000 -n pure-k8s-prometheus
+kubectl port-forward svc/prometheus-service 9091:9090 -n pure-k8s-prometheus
+kubectl port-forward svc/grafana-service 3000:3000 -n pure-k8s-prometheus
+kubectl port-forward svc/argocd-server -n argocd 8081:443
+
+http://localhost:5000
+http://localhost:5000/metrics
+http://localhost:9091
+http://localhost:3000
+http://localhost:8081
+
+grafana:
+admin/admin
+Add new connection -> Promethues -> Add new data source:
+Prometheus server URL: http://prometheus-service:9090 (prometheus-service is the service name in k8s)
+
+argocd
+kubectl apply -f argocd/pure-k8s-prometheus-app-application.yaml
+
+delete resources:
+kubectl delete -k k8s
+kubectl delete -f argocd/pure-k8s-prometheus-app-application.yaml
