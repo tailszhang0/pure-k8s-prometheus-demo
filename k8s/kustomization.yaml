@@ -1,0 +1,15 @@
+namespace: pure-k8s-prometheus
+
+commonLabels:
+  project: pure-k8s-prometheus-demo
+  managed-by: kustomize
+
+commonAnnotations:
+  owner: zhangwen
+  environment: dev
+
+resources:
+  - namespace.yaml
+  - ../app/k8s
+  - ../monitoring/prometheus
+  - ../monitoring/grafana

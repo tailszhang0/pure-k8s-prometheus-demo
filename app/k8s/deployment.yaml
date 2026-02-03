@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pure-k8s-prometheus-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pure-k8s-prometheus-app
+  template:
+    metadata:
+      labels:
+        app: pure-k8s-prometheus-app
+    spec:
+      containers:
+        - name: pure-k8s-prometheus-app
+          image: tails1982/pure-k8s-prometheus-demo:latest
+          ports:
+            - containerPort: 5000

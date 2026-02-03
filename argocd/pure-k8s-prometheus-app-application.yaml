@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pure-k8s-prometheus-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/tailszhang0/pure-k8s-prometheus-demo.git
+    targetRevision: HEAD
+    path: k8s
+    kustomize: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pure-k8s-prometheus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
